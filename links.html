@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Link Storage Menu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #e0e0e0;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.05);
+    }
+    h2 {
+      text-align: center;
+      color: #ffffff;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      background: #2c2c2c;
+      border: 1px solid #444;
+      color: #fff;
+    }
+    button {
+      padding: 8px 12px;
+      font-size: 14px;
+      margin-top: 5px;
+      cursor: pointer;
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+    }
+    button:hover {
+      background: #444;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+    }
+    li {
+      padding: 8px;
+      background: #2a2a2a;
+      margin-bottom: 8px;
+      border: 1px solid #444;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    a {
+      text-decoration: none;
+      color: #4ea8ff;
+      word-break: break-word;
+    }
+    .delete {
+      background: red;
+      color: white;
+      border: none;
+      padding: 2px 6px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Saved Links</h2>
+
+    <input type="text" id="labelInput" placeholder="Label (optional)">
+    <input type="text" id="linkInput" placeholder="Enter URL (https://...)">
+    <button onclick="addLink()">Add Link</button>
+
+    <ul id="linkList"></ul>
+  </div>
+
+  <script>
+    let links = JSON.parse(localStorage.getItem('storedLinks')) || [
+      { label: 'HentaiFreak', url: 'http://hentaifreak.org/' },
+      { label: 'Hentai.tv', url: 'https://hentai.tv/' }
+    ];
+
+    function saveLinks() {
+      localStorage.setItem('storedLinks', JSON.stringify(links));
+    }
+
+    function renderLinks() {
+      const list = document.getElementById('linkList');
+      list.innerHTML = '';
+      links.forEach((item, index) => {
+        const li = document.createElement('li');
+
+        const a = document.createElement('a');
+        a.href = item.url;
+        a.target = '_blank';
+        a.textContent = item.label || item.url;
+
+        const del = document.createElement('button');
+        del.textContent = '✕';
+        del.className = 'delete';
+        del.onclick = () => {
+          links.splice(index, 1);
+          saveLinks();
+          renderLinks();
+        };
+
+        li.appendChild(a);
+        li.appendChild(del);
+        list.appendChild(li);
+      });
+    }
+
+    function addLink() {
+      const label = document.getElementById('labelInput').value.trim();
+      const url = document.getElementById('linkInput').value.trim();
+
+      if (!url || !url.startsWith('http')) {
+        alert('Please enter a valid URL starting with http:// or https://');
+        return;
+      }
+
+      links.push({ label, url });
+      saveLinks();
+      renderLinks();
+
+      document.getElementById('labelInput').value = '';
+      document.getElementById('linkInput').value = '';
+    }
+
+    renderLinks();
+  </script>
+</body>
+</html>

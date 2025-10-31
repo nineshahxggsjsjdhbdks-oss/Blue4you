@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Copy Options — SpaceRoad Embed + Data URL</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#06b6d4; --muted:#94a3b8;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:linear-gradient(180deg,#071026 0%, #081726 100%);
+      color:#e6eef6;
+      padding:24px;
+    }
+    .container{ width:100%; max-width:920px; }
+    h1{ margin:0 0 8px 0; font-size:20px; }
+    p.sub{ margin:0 0 18px 0; color:var(--muted); font-size:13px; }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      padding:18px;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    .list{ display:grid; gap:10px; margin-top:8px; }
+    .item{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      transition:transform .08s ease, box-shadow .08s ease;
+      cursor:default;
+    }
+    .item:focus-within{ outline:2px solid rgba(6,182,212,0.12); transform:translateY(-2px); }
+    .text{
+      flex:1;
+      white-space:pre-wrap;
+      word-break:break-word;
+      font-size:13px;
+      color:#dbeafe;
+      line-height:1.35;
+      user-select:text;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;
+      background: rgba(255,255,255,0.01);
+      padding:8px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      margin-left:auto;
+    }
+    button.copy-btn{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--accent);
+      padding:8px 10px;
+      border-radius:8px;
+      font-weight:600;
+      cursor:pointer;
+      min-width:84px;
+      font-size:13px;
+    }
+    button.copy-btn:active{ transform:translateY(1px); }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:28px;
+      background:linear-gradient(180deg,rgba(10,20,30,0.95),rgba(7,12,20,0.95));
+      color:#e6f6ee;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow:0 6px 30px rgba(2,6,23,0.6);
+      font-size:13px;
+      display:none;
+      align-items:center;
+      gap:8px;
+    }
+    .toast.show{ display:flex; animation:fade .18s ease; }
+    @keyframes fade{ from{opacity:0; transform:translateX(-50%) translateY(6px)} to{opacity:1; transform:translateX(-50%) translateY(0)} }
+
+    @media (max-width:560px){
+      .item{ padding:10px; gap:8px; }
+      .text{ font-size:12px; }
+      button.copy-btn{ min-width:68px; padding:7px 8px; font-size:12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Copy options</h1>
+    <p class="sub">Click an option (or its "Copy" button) to send that exact text to your clipboard.</p>
+
+    <div class="card" role="region" aria-label="Copyable options">
+      <div class="list" id="optionsList">
+
+        <!-- FIRST item: the full decoded HTML snippet (multiline preserved) -->
+        <div class="item" tabindex="0" role="group" aria-label="Embeder HTML">
+          <div class="text" aria-hidden="true">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Embeder&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;iframe src="https://blue4you.neocities.org/"&gt;&lt;/iframe&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+          </div>
+          <!-- hidden exact copy text (raw, not escaped) -->
+          <pre class="value" hidden><!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Embeder</title> 
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <iframe src="https://spaceroad.neocities.org/"></iframe>
+</body>
+</html></pre>
+          <div class="actions">
+            <button class="copy-btn" title="Copy Embeder HTML" aria-label="Copy Embeder HTML">Copy</button>
+          </div>
+        </div>
+
+        <!-- SECOND item: the percent-encoded data URL -->
+        <div class="item" tabindex="0" role="group" aria-label="Data URL">
+          <div class="text" aria-hidden="true">data:text/html;charset=utf-8,%0A%3C!DOCTYPE%20html%3E%0A%3Chtml%3E%0A%3Chead%3E%0A%20%20%3Cmeta%20charset%3D%22UTF-8%22%3E%0A%20%20%3Ctitle%3EEmbeder%3C%2Ftitle%3E%0A%20%20%3Cstyle%3E%0A%20%20%20%20body%20%7B%0A%20%20%20%20%20%20margin%3A%200%3B%0A%20%20%20%20%20%20height%3A%20100vh%3B%0A%20%20%20%20%20%20overflow%3A%20hidden%3B%0A%20%20%20%20%7D%0A%20%20%20%20iframe%20%7B%0A%20%20%20%20%20%20width%3A%20100%25%3B%0A%20%20%20%20%20%20height%3A%20100%25%3B%0A%20%20%20%20%20%20border%3A%20none%3B%0A%20%20%20%20%7D%0A%20%20%3C%2Fstyle%3E%0A%3C%2Fhead%3E%0A%3Cbody%3E%0A%20%20%3Ciframe%20src%3D%22https%3A%2F%2Fblue4you.neocities.org%2F%22%3E%3C%2Fiframe%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E</div>
+          <pre class="value" hidden>data:text/html;charset=utf-8,%0A%3C!DOCTYPE%20html%3E%0A%3Chtml%3E%0A%3Chead%3E%0A%20%20%3Cmeta%20charset%3D%22UTF-8%22%3E%0A%20%20%3Ctitle%3EEmbeder%3C%2Ftitle%3E%0A%20%20%3Cstyle%3E%0A%20%20%20%20body%20%7B%0A%20%20%20%20%20%20margin%3A%200%3B%0A%20%20%20%20%20%20height%3A%20100vh%3B%0A%20%20%20%20%20%20overflow%3A%20hidden%3B%0A%20%20%20%20%7D%0A%20%20%20%20iframe%20%7B%0A%20%20%20%20%20%20width%3A%20100%25%3B%0A%20%20%20%20%20%20height%3A%20100%25%3B%0A%20%20%20%20%20%20border%3A%20none%3B%0A%20%20%20%20%7D%0A%20%20%3C%2Fstyle%3E%0A%3C%2Fhead%3E%0A%3Cbody%3E%0A%20%20%3Ciframe%20src%3D%22https%3A%2F%2Fblue4you.neocities.org%2F%22%3E%3C%2Fiframe%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E</pre>
+          <div class="actions">
+            <button class="copy-btn" title="Copy data URL" aria-label="Copy data URL">Copy</button>
+          </div>
+        </div>
+
+        <!-- Additional example item (optional) -->
+        <div class="item" tabindex="0" role="group" aria-label="Example short text">
+          <div class="text" aria-hidden="true">Hello — this text was copied!</div>
+          <pre class="value" hidden>Hello — this text was copied!</pre>
+          <div class="actions">
+            <button class="copy-btn" title="Copy example" aria-label="Copy example">Copy</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script>
+    (function(){
+      const list = document.getElementById('optionsList');
+      const toast = document.getElementById('toast');
+      let toastTimer = null;
+
+      function showToast(msg){
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(()=> toast.classList.remove('show'), 2200);
+      }
+
+      async function copyText(text){
+        // Prefer modern clipboard API
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          try {
+            await navigator.clipboard.writeText(text);
+            return true;
+          } catch (e) {
+            // fallthrough to fallback
+          }
+        }
+        // fallback using execCommand (works in many browsers but requires a selection)
+        try {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          // avoid scrolling to bottom
+          textarea.style.position = 'fixed';
+          textarea.style.left = '-9999px';
+          textarea.style.top = '0';
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          const ok = document.execCommand('copy');
+          textarea.remove();
+          return ok;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      // Handler for clicks on either item or copy button
+      list.addEventListener('click', async (ev) => {
+        const btn = ev.target.closest('button.copy-btn');
+        const itemEl = ev.target.closest('.item');
+        if(!itemEl) return;
+        const valueNode = itemEl.querySelector('.value');
+        const value = valueNode ? valueNode.textContent : '';
+        const success = await copyText(value);
+        if(success) showToast('Copied to clipboard ✓');
+        else showToast('Could not copy — select and press Ctrl/Cmd+C');
+
+        if(!btn) {
+          const button = itemEl.querySelector('button.copy-btn');
+          if(button) button.focus({preventScroll:true});
+        }
+      });
+
+      // support Enter/Space to copy when item has focus
+      list.addEventListener('keydown', async (ev) => {
+        if(ev.key === 'Enter' || ev.key === ' '){
+          const focused = document.activeElement;
+          if(focused && focused.classList.contains('item')){
+            ev.preventDefault();
+            const valueNode = focused.querySelector('.value');
+            const value = valueNode ? valueNode.textContent : '';
+            const success = await copyText(value);
+            if(success) showToast('Copied to clipboard ✓');
+            else showToast('Could not copy — select and press Ctrl/Cmd+C');
+          }
+        }
+      });
+
+      // Convenience: allow adding an item programmatically via console:
+      window.addCopyItem = function(text, displayLabel){
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.setAttribute('tabindex','0');
+        const display = document.createElement('div');
+        display.className = 'text';
+        display.setAttribute('aria-hidden','true');
+        display.textContent = displayLabel ?? text;
+        const pre = document.createElement('pre');
+        pre.className = 'value';
+        pre.hidden = true;
+        pre.textContent = text;
+        const actions = document.createElement('div');
+        actions.className = 'actions';
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        actions.appendChild(btn);
+        div.appendChild(display);
+        div.appendChild(pre);
+        div.appendChild(actions);
+        list.appendChild(div);
+        return div;
+      };
+    })();
+  </script>
+</body>
+</html>
