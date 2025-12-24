@@ -1,0 +1,200 @@
+<script>
+(function () {
+  const startDate = new Date("December 23, 2025 00:00:00").getTime();
+  const endDate = new Date("February 20, 2026 23:59:59").getTime();
+  const now = Date.now();
+
+  if (now >= startDate && now <= endDate) {
+    // Lock the page completely
+    document.documentElement.innerHTML = "";
+    document.documentElement.style.cssText = `
+      background: #000;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    `;
+
+    const black = document.createElement("div");
+    black.style.cssText = `
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 2147483647;
+      pointer-events: all;
+    `;
+
+    document.documentElement.appendChild(black);
+  }
+})();
+</script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue4you</title>
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/nineshahxggsjsjdhbdks-oss/sussy-content/main/Blue40you.png">
+  <style>
+    :root{
+      --bg: #0f1724;
+      --card: #0b1220;
+      --button: #06b6d4;
+      --text: #e6eef6;
+      --muted: #9aa9b8;
+      --radius: 12px;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg), #071022);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+      box-sizing:border-box;
+    }
+
+    .card{
+      width:100%;
+      max-width:720px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .title{
+      margin:0 0 12px 0;
+      font-size:18px;
+      letter-spacing:0.2px;
+    }
+    .subtitle{
+      margin:0 0 18px 0;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+
+    /* Make stack on narrow screens */
+    @media (max-width:520px){
+      .grid{
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:600;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+      color:var(--text);
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      cursor:pointer;
+      user-select:none;
+      box-shadow: 0 4px 10px rgba(2,6,23,0.45);
+    }
+
+    .btn:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+    }
+
+    .btn:active{
+      transform: translateY(-1px) scale(.997);
+    }
+
+    .accent {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:36px;
+      height:36px;
+      border-radius:8px;
+      background: linear-gradient(180deg, var(--button), #029fb4);
+      color:#012226;
+      font-weight:700;
+      font-size:14px;
+      box-shadow: 0 6px 18px rgba(6,182,212,0.12), inset 0 -2px 6px rgba(0,0,0,0.15);
+    }
+
+    .label {
+      font-size:14px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .foot {
+      margin-top:14px;
+      font-size:12px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="group" aria-label="Six links">
+      <h1 class="title">Quick Links</h1>
+      <p class="subtitle">Diapers and farts and others stuff</p>
+
+      <div class="grid">
+        <!-- Change href="#" to your desired URL and the inner text -->
+        <a class="btn" href="diapers1.html"  rel="noopener noreferrer" aria-label="Open Link One">
+          <span class="accent">1</span>
+          <span class="label">Link One</span>
+        </a>
+
+        <a class="btn" href="diapers.html" rel="noopener noreferrer" aria-label="Open Link Two">
+          <span class="accent">2</span>
+          <span class="label">Link Two</span>
+        </a>
+
+        <a class="btn" href="Farts1.html"  rel="noopener noreferrer" aria-label="Open Link Three">
+          <span class="accent">3</span>
+          <span class="label">Link Three</span>
+        </a>
+
+        <a class="btn" href="diapers2.html"  rel="noopener noreferrer" aria-label="Open Link Four">
+          <span class="accent">4</span>
+          <span class="label">Link Four</span>
+        </a>
+
+        <a class="btn" href="https://example.com/five"  rel="noopener noreferrer" aria-label="Open Link Five">
+          <span class="accent">5</span>
+          <span class="label">Link Five</span>
+        </a>
+
+        <a class="btn" href="https://example.com/six"  rel="noopener noreferrer" aria-label="Open Link Six">
+          <span class="accent">6</span>
+          <span class="label">Link Six</span>
+        </a>
+      </div>
+
+      <p class="foot">Tip. Not for kids this is actually porn</p>
+    </div>
+  </div>
+</body>
+</html>
